@@ -1,5 +1,5 @@
 (function(global) {
-	var method_invoker = function() {
+	global.method_invoker = function() {
 		if( arguments.length < 3 ) return;
 		var i, value, winObj, windowType = arguments[0], windowName = arguments[1], args = [arguments[2]];
 		for( i = 3 ; i < arguments.length ; i++ ) {
@@ -21,7 +21,7 @@
 						args.push(serilaize(value));
 					} else {
 						args.push('object');  // JSON serialize object;
-						args.push(JSON.stringify(value);
+						args.push(JSON.stringify(value));
 					}
 			}
 		}
@@ -31,15 +31,18 @@
 			winObj = document.getElementById(windowName).contentWindow;
 		} else if( windowType === 2 ) { // frame child
 		} else if( windowType === 3 ) { // popup
+			winObj = parent;
 		} else if( windowType === 4 ) { // iframe parent
+			winObj = parent;
 		} else if( windowType === 5 ) { // frame parent
+			winObj = parent;
 		} else if( windowType === 6 ) { // opener
-			
+			winObj = opener;
 		}
 		if( winObj) {
-			ret = winobj["method_callee"].call(null, args);
+			ret = winObj["method_callee"].call(null, args);
 			if(typeof ret === 'string') {
-				retType = ret[0];
+				retType = ret.charAt(0);
 				retValue = ret.substring(1);
 				switch(retType) {
 					case "0":	// undefined
@@ -73,7 +76,7 @@
 		
 	}
 	
-	var method_callee = function() {
+	global.method_callee = function() {
 		if(arguments.length < 1) return;
 		var i,value, valeuType, args = [], method_name = arguments[0].split('.'), method_obj;
 		for( i = 1 ; i < arguments.length ; ) {
@@ -100,7 +103,7 @@
 		for(i=1;i<method_name.length;i++) {
 			method_obj = method_obj[method_name[i]];
 		}
-		value = methodObj.call(null, args);
+		value = method_obj.call(null, args);
 		switch (typeof value) {
 			case 'undefined':
 				return '0undefined';
