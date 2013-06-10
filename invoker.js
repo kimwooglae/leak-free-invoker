@@ -1,11 +1,8 @@
 /*
-*  iframe
-
-iframe
+*
+iframe()
 wqiframe()
 wqpopup()
-
-
 */
 
 (function(global) {
@@ -14,7 +11,6 @@ wqpopup()
 	var re3 = /wqpopup\W*\(\W*['"]?([^'"]+)['"]?\W*\)/i;
 
 	global.method_invoker = function() {
-debugger;
 		if( arguments.length < 2) return;
 		if( typeof arguments[1] !== 'string') return;
 		var i, value, winObj, windowName = arguments[0].split('.'), args = [arguments[1]], found;
@@ -75,23 +71,6 @@ debugger;
 			}
 		}
 				
-/*
-		// find target window
-		if( windowType === 'frame' || windowType === 'iframe' ) {	// iframe child
-			winObj = document.getElementById(windowName).contentWindow;
-		} else if( windowType === "popup" && windowName ) { // popup
-			winObj = windowName;	// reference of window.open() return object 
-		} else if( windowType === "parent" ) { // iframe parent
-			if( global !== global.parent ) {
-				winObj = global.parent;
-			}
-		} else if( windowType === "opener" ) { // opener
-			if( global.opener && !global.opener.closed ) {
-				winObj = global.opener;
-			}
-		}
-*/
-
 		if( winObj) {
 			ret = winObj["method_callee"].apply(null, args);
 			if(typeof ret === 'string') {
