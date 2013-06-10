@@ -1,8 +1,13 @@
 /*
-*
-iframe()
-wqiframe()
-wqpopup()
+ * top, opener, parent 지원
+ * 함수 iframe(), wqiframe(), wqpopup()
+ * 나머지는 전역변수로 가정
+ * 예제
+ *   top.opener.parent  // 최상위 윈도우 객체의 opener의 부모창
+ *   parent.iframe(frame001) // id가 frame001인 형제 iframe창
+ *   parent.wqiframe(iframe001) // websquare id가 iframe001인 형채 iframe창
+ *   wqpopup(popup01)		// websquare id가 popup01인 popup창
+ *   popupObj.iframe(frame001)  // 전역 변수가 popupObj인 창의 하위에 있는 id가 frame001인 iframe창
 */
 
 (function(global) {
@@ -224,7 +229,6 @@ function test2(value) {
 
 function tester(target, method, objType) {
   var value, ret;
-  debugger;
   if(!objType) {
     objType = document.getElementById("dataType");
     objType = objType.value;
